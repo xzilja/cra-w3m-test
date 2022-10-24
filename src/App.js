@@ -1,9 +1,14 @@
-import { ConnectButton, Web3Modal } from "@web3modal/react";
+import {
+  ConnectButton,
+  useAccount,
+  useDisconnect,
+  Web3Modal,
+} from "@web3modal/react";
 import "./App.css";
 import logo from "./logo.svg";
 
 const config = {
-  projectId: "<YOUR_PROJ_ID>",
+  projectId: "<YOUR_PROJECT_ID>",
   theme: "dark",
   accentColor: "default",
   ethereum: {
@@ -12,9 +17,18 @@ const config = {
 };
 
 function App() {
+  const { account } = useAccount();
+  const disconnect = useDisconnect();
+
+  console.log(account);
+
   return (
     <div className="App">
-      <ConnectButton />
+      {account.isConnected ? (
+        <button onClick={disconnect}>Disconnect</button>
+      ) : (
+        <ConnectButton />
+      )}
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
